@@ -1,0 +1,16 @@
+.bookrow {
+  height: 90vh;
+  overflow: scroll;
+}
+
+.card {
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  .card-columns {
+    -webkit-column-count: 6;
+            column-count: 6;
+  }
+}
+/*# sourceMappingURL=latestReleases.css.map */

@@ -3,27 +3,27 @@ import '../styles/css/footer.css'
 
 const Footer = (params) => {
       return (
-        <footer className="d-flex justify-content-center sticky-bottom">
+        <footer className="d-flex justify-content-center fixed-bottom">
         <Row className="w-75">
           <Col >
             <ul>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
+              <li>About us</li>
+              <li>Terms and Conditions</li>
+              <li>Privacy</li>
             </ul>
           </Col>
           <Col >
           <ul>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
+              <li>More books</li>
+              <li>Even more books</li>
+              <li>Test</li>
             </ul>
           </Col>
           <Col >
           <ul>
-              <li>7</li>
-              <li>8</li>
-              <li>9</li>
+              <li>Some more footer Stuff</li>
+              <li>Even more footer stuff</li>
+              <li>End</li>
             </ul>
           </Col>
         </Row>
