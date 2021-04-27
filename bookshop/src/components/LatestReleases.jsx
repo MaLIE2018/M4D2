@@ -5,18 +5,17 @@ const LatestReleases = (books) => {
    return(
       <Row>
          <CardColumns>
-            {books.map((book) => {
-              console.log(book);
+            {books.map((book) => (
               <Card key={book.asin}>
                   <Card.Img variant="top" src={book.img} />
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
                     <Card.Text>
-                     {book.category.first}
+                     {book.category}
                     </Card.Text>
                   </Card.Body>
               </Card>
-            })}
+            ))}
               
          </CardColumns>
       </Row>
