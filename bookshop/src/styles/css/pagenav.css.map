@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,OAAO,CAAC;EACN,UAAU,EAAE,IAAI;CAIY;;AAL9B,AAEE,OAFK,CAEL,CAAC,CAAC;EACA,eAAe,EAAE,IAAI;CAAG;;AAH5B,AAIE,OAJK,CAIL,CAAC,AAAA,MAAM,CAAC;EACN,eAAe,EAAE,IAAI;CAAG",
-    "sources": [
-        "../sass/pagenav.sass"
-    ],
-    "names": [],
-    "file": "pagenav.css"
-}

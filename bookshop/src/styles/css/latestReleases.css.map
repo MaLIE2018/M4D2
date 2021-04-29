@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,QAAQ,CAAC;EACP,MAAM,EAAE,IAAI;EACZ,QAAQ,EAAE,MAAM;CAAG;;AAErB,AAAA,KAAK,CAAC;EACJ,MAAM,EAAE,OAAO;CAAG;;AAIjB,MAAM,EAAE,SAAS,EAAE,KAAK;EAD3B,AAAA,aAAa,CAAC;IAEV,YAAY,EAAE,CAAC;GAAK",
-    "sources": [
-        "../sass/latestReleases.sass"
-    ],
-    "names": [],
-    "file": "latestReleases.css"
-}

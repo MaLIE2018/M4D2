@@ -1,27 +1,46 @@
-import { Row, CardColumns, Card } from "react-bootstrap";
+import { Row, CardColumns } from "react-bootstrap";
 import "../styles/css/latestReleases.css";
+import React from "react";
+import CommentArea from "../components/CommentArea";
+import SingleBook from "../components/SingleBook";
+class LatestReleases extends React.Component {
+  state = {
+    showComment: false,
+    currentBook: {},
+  };
 
-const LatestReleases = (books) => {
-  books = books.books;
-  return (
-    <Row className='bookrow m-0'>
-      <CardColumns>
-        {books.map((book) => (
-          <Card key={book.asin}>
-            <Card.Img
-              variant='top float-right'
-              src={book.img}
-              style={{ width: 150 }}
+  onReturnKeyPress = (showComment) => {
+    this.setState((state) => {
+      return { showComment: showComment };
+    });
+  };
+
+  handleClick = (showComment, currentBook) => {
+    this.setState((state) => {
+      return { showComment: true, currentBook: currentBook };
+    });
+  };
+
+  render() {
+    return this.state.showComment ? (
+      <CommentArea
+        onReturnKeyPress={this.onReturnKeyPress}
+        currentBook={this.state.currentBook}
+      />
+    ) : (
+      <Row className='bookrow m-0'>
+        <CardColumns>
+          {this.props.books.map((book) => (
+            <SingleBook
+              key={book.asin}
+              book={book}
+              onOpenCommentsClick={this.handleClick}
             />
-            <Card.Body>
-              <Card.Title>{book.title}</Card.Title>
-              <Card.Text>{book.category}</Card.Text>
-            </Card.Body>
-          </Card>
-        ))}
-      </CardColumns>
-    </Row>
-  );
-};
+          ))}
+        </CardColumns>
+      </Row>
+    );
+  }
+}
 
 export default LatestReleases;

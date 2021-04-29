@@ -1,0 +1,11 @@
+/* .commentArea {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: white;
+  padding: 3em;
+  min-width: 50vw;
+  min-height: 50vh;
+  z-index: 1;
+} */

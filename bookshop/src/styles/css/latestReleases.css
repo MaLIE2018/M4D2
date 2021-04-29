@@ -7,10 +7,6 @@
   cursor: pointer;
 }
 
-@media (max-width: 576px) {
-  .card-columns {
-    -webkit-column-count: 6;
-            column-count: 6;
-  }
+.bookrow .card-columns {
+  column-count: 6;
 }
-/*# sourceMappingURL=latestReleases.css.map */
