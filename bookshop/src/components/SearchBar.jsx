@@ -12,6 +12,7 @@ class SearchBar extends Component {
         placeholder='Search'
         className='mr-sm-2'
         onChange={this.handleFilterTextChange}
+        style={{ position: "sticky", top: 0, zIndex: 1 }}
       />
     );
   }

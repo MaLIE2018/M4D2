@@ -8,10 +8,15 @@ class CommentArea extends Component {
   state = {
     comments: [],
     isLoading: true,
+    newComment: false,
   };
 
   handleReturnKeyPress = () => {
     this.props.onReturnKeyPress(false);
+  };
+
+  handleNewCommentSubmit = (newComment) => {
+    this.setState({ newComment: newComment });
   };
 
   componentDidMount = async () => {
@@ -29,7 +34,7 @@ class CommentArea extends Component {
         let data = await response.json();
 
         this.setState((state) => {
-          return { comments: data, isLoading: false };
+          return { comments: data, isLoading: false, newComment: false };
         });
       } else {
         console.log("something went wrong");
@@ -46,7 +51,7 @@ class CommentArea extends Component {
       </Spinner>
     );
     return (
-      <div className='commentArea overflow-auto mt-5'>
+      <div className='commentArea overflow-auto my-5'>
         <Row className='mx-2'>
           <Col sm={5} md={2} lg={2}>
             <img
@@ -64,7 +69,10 @@ class CommentArea extends Component {
             )}
             <Row className=''>
               <Col>
-                <AddComment asin={this.props.currentBook.asin} />
+                <AddComment
+                  asin={this.props.currentBook.asin}
+                  onNewCommentSubmit={this.handleNewCommentSubmit}
+                />
                 <Button
                   variant='outline-secondary'
                   onClick={this.handleReturnKeyPress}>

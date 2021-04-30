@@ -6,6 +6,10 @@ class AddComment extends Component {
     newComment: { comment: "", rate: 1, elementId: this.props.asin },
   };
 
+  handleNewCommentSubmit = () => {
+    this.props.onNewCommentSubmit(true);
+  };
+
   manipulateData = async (event) => {
     event.preventDefault();
     console.log(JSON.stringify(this.state.newComment));
@@ -15,6 +19,7 @@ class AddComment extends Component {
         {
           method: "POST",
           headers: {
+            "Content-Type": "application/json",
             Authorization:
               "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMGI3MmIxZjBmYjAwMTVkOTE3MDAiLCJpYXQiOjE2MTkxODkyNDIsImV4cCI6MTYyMDM5ODg0Mn0.qo8VVZkKeFwmqiPJb5zGl4xfyS3VgS6cQh629szGmH4",
           },
@@ -22,6 +27,8 @@ class AddComment extends Component {
         }
       );
       if (response.ok) {
+        this.setState({ comment: "" });
+        this.handleNewCommentSubmit();
         alert("Your Comment got saved!");
       }
     } catch (error) {
@@ -55,6 +62,7 @@ class AddComment extends Component {
                 <Form.Control
                   as='textarea'
                   rows={3}
+                  value={this.state.comment}
                   onChange={this.handleChange}
                   required
                 />
