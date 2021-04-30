@@ -32,14 +32,14 @@ class CommentList extends Component {
         className=''
         style={{ height: "30vh", overflow: "scroll", position: "relative" }}>
         <SearchBar
-          value={this.state.filterText}
+          currentText={this.state.filterText}
           onFilterTextChange={this.handleFilterTextChange}
         />
         <ListGroup>
           {comments.map((comment) => {
             return (
               <ListGroup.Item key={comment._id}>
-                Author: {comment.author} Comment:{comment.comment} Rating:{" "}
+                Author: {comment.author} Comment: {comment.comment} Rating:{" "}
                 {comment.rate}
               </ListGroup.Item>
             );

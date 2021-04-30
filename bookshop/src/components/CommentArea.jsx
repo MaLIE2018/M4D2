@@ -19,7 +19,14 @@ class CommentArea extends Component {
     this.setState({ newComment: newComment });
   };
 
+  componentDidUpdate = async () => {
+    if (this.state.newComment === true) {
+      await this.componentDidMount();
+    }
+  };
+
   componentDidMount = async () => {
+    console.log("did mount");
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/comments/${this.props.currentBook.asin}`,
