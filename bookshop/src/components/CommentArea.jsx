@@ -2,31 +2,56 @@ import React, { Component } from "react";
 import AddComment from "./AddComment";
 import CommentList from "./CommentList";
 import "../styles/css/commentArea.css";
-import { Button, Row, Col, Spinner } from "react-bootstrap";
+import { Col, Spinner, Row } from "react-bootstrap";
 
 class CommentArea extends Component {
   state = {
     comments: [],
     isLoading: true,
+    currComment: {
+      comment: "",
+      rate: 0,
+      elementId: "",
+    },
     newComment: false,
-  };
-
-  handleReturnKeyPress = () => {
-    this.props.onReturnKeyPress(false);
   };
 
   handleNewCommentSubmit = (newComment) => {
     this.setState({ newComment: newComment });
   };
 
-  componentDidUpdate = async () => {
-    if (this.state.newComment === true) {
-      await this.componentDidMount();
+  handleCommentUpdate = (e) => {
+    e.preventDefault();
+    let id = e.target.id;
+    this.setState({
+      currComment: {
+        ...this.state.currComment,
+        [id]: parseInt(e.target.value)
+          ? parseInt(e.target.value)
+          : e.target.value,
+        elementId: this.props.currentBook.asin,
+      },
+    });
+  };
+
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (prevProps.currentBook !== this.props.currentBook) {
+      this.fetchData();
+    }
+    if (prevState.newComment !== this.state.newComment) {
+      this.setState({
+        newComment: false,
+        currComment: { comment: "", rate: 0, elementId: "" },
+      });
+      this.fetchData();
     }
   };
 
   componentDidMount = async () => {
-    console.log("did mount");
+    this.fetchData();
+  };
+
+  fetchData = async () => {
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/comments/${this.props.currentBook.asin}`,
@@ -39,7 +64,6 @@ class CommentArea extends Component {
       );
       if (response.ok) {
         let data = await response.json();
-
         this.setState((state) => {
           return { comments: data, isLoading: false, newComment: false };
         });
@@ -77,14 +101,12 @@ class CommentArea extends Component {
             <Row className=''>
               <Col>
                 <AddComment
-                  asin={this.props.currentBook.asin}
+                  currBook={this.props.currentBook}
+                  currComment={this.state.currComment}
+                  onCommentUpdate={this.handleCommentUpdate}
                   onNewCommentSubmit={this.handleNewCommentSubmit}
+                  newComment={this.state.newComment}
                 />
-                <Button
-                  variant='outline-secondary'
-                  onClick={this.handleReturnKeyPress}>
-                  Go Back
-                </Button>
               </Col>
             </Row>
           </Col>

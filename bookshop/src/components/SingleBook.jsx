@@ -17,7 +17,7 @@ class SingleBook extends React.Component {
   };
 
   handleOpenCommentsClick = () => {
-    this.props.onOpenCommentsClick(true, this.props.book);
+    this.props.onDetailClick(this.props.book);
   };
 
   render() {

@@ -1,69 +1,68 @@
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 import { Component } from "react";
 
 class AddComment extends Component {
   state = {
-    newComment: { comment: "", rate: 1, elementId: this.props.asin },
+    saveSuccess: false,
   };
 
-  handleNewCommentSubmit = () => {
+  handleCommentUpdate = (e) => {
+    this.props.onCommentUpdate(e);
+  };
+
+  handleNewCommentSubmit = (e) => {
+    e.preventDefault();
     this.props.onNewCommentSubmit(true);
   };
 
-  manipulateData = async (event) => {
-    event.preventDefault();
-    console.log(JSON.stringify(this.state.newComment));
-    try {
-      let response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/comments/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMGI3MmIxZjBmYjAwMTVkOTE3MDAiLCJpYXQiOjE2MTkxODkyNDIsImV4cCI6MTYyMDM5ODg0Mn0.qo8VVZkKeFwmqiPJb5zGl4xfyS3VgS6cQh629szGmH4",
-          },
-          body: JSON.stringify(this.state.newComment),
+  componentDidUpdate = async (prevProps) => {
+    if (prevProps.newComment !== this.props.newComment) {
+      console.log("addComment CDU");
+      try {
+        let response = await fetch(
+          `https://striveschool-api.herokuapp.com/api/comments/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDgwMGI3MmIxZjBmYjAwMTVkOTE3MDAiLCJpYXQiOjE2MTkxODkyNDIsImV4cCI6MTYyMDM5ODg0Mn0.qo8VVZkKeFwmqiPJb5zGl4xfyS3VgS6cQh629szGmH4",
+            },
+            body: JSON.stringify(this.props.currComment),
+          }
+        );
+        if (response.ok) {
         }
-      );
-      if (response.ok) {
-        this.setState({ comment: "" });
-        this.handleNewCommentSubmit();
-        alert("Your Comment got saved!");
+      } catch (error) {
+        alert("Something went wrong");
       }
-    } catch (error) {
-      alert("Something went wrong");
     }
-  };
-
-  handleChange = (e) => {
-    let id = e.target.id;
-    this.setState((state) => {
-      return {
-        newComment: {
-          ...this.state.newComment,
-          [id]: parseInt(e.target.value)
-            ? parseInt(e.target.value)
-            : e.target.value,
-        },
-      };
-    });
   };
 
   render() {
     return (
       <>
         <h6 className='mt-3'>Add Comments</h6>
-        <Form onSubmit={this.manipulateData}>
+        {this.state.saveSuccess && (
+          <Alert
+            variant='success'
+            className='position-absolute'
+            style={{
+              top: 0,
+            }}>
+            Your comment got added
+          </Alert>
+        )}
+        <Form onSubmit={this.handleNewCommentSubmit}>
           <Row>
             <Col>
               <Form.Group controlId='comment'>
                 <Form.Label>Your comment</Form.Label>
                 <Form.Control
                   as='textarea'
-                  rows={3}
-                  value={this.state.comment}
-                  onChange={this.handleChange}
+                  rows={1}
+                  value={this.props.currComment.comment}
+                  onChange={(event) => this.handleCommentUpdate(event)}
                   required
                 />
               </Form.Group>
@@ -71,7 +70,10 @@ class AddComment extends Component {
             <Col>
               <Form.Group controlId='rate'>
                 <Form.Label>Rating</Form.Label>
-                <Form.Control as='select' onChange={this.handleChange} required>
+                <Form.Control
+                  as='select'
+                  onChange={(event) => this.handleCommentUpdate(event)}
+                  required>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
